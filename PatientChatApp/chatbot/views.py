@@ -32,6 +32,7 @@ from typing import Annotated, Sequence, TypedDict
 from datetime import date, time
 
 from langchain_openai import ChatOpenAI
+from langchain_community.chat_models import ChatOllama
 import functools
 
 from langchain_core.messages import AIMessage
@@ -220,7 +221,21 @@ except Exception as e:
 #     graphdb.run(query, patientUsername=patientUsername,
 #                 doctorUsername=doctorUsername)
 
-llm = ChatOpenAI(model="gpt-4o")  # Customizable
+
+
+def _build_llm():
+    provider = os.getenv("LLM_PROVIDER", "openai").lower()
+
+    if provider == "ollama":
+        model = os.getenv("OLLAMA_MODEL", "llama3")
+        base_url = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
+        return ChatOllama(model=model, base_url=base_url)
+
+    model = os.getenv("OPENAI_MODEL", "gpt-4o")
+    return ChatOpenAI(model=model)
+
+
+llm = _build_llm()  # Customizable
 
 # Create Graph
 

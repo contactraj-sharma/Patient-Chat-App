@@ -8,3 +8,4 @@ langchain-openai
 py2neo
 psycopg2
 neo4j
+exa-py

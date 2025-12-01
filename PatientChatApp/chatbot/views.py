@@ -4,6 +4,7 @@ from django.http import JsonResponse
 
 from django.contrib import auth
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from .models import Chat, Patient, Reservation, Doctor, ReservationRequest
 
@@ -913,6 +914,7 @@ def user_exists(username):
 # Create your views here.
 
 
+@login_required(login_url='login')
 def chatbot(request):
     if request.method == 'POST':
         message = request.POST.get('message')

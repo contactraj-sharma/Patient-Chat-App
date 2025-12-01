@@ -1,0 +1,10 @@
+django
+pymongo
+langchain-core
+langgraph
+typing
+langchain-community
+langchain-openai
+py2neo
+psycopg2
+neo4j

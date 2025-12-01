@@ -9,6 +9,7 @@ from .models import Chat, Patient, Reservation, Doctor, ReservationRequest
 
 from django.utils import timezone, dateparse
 
+import importlib.util
 import os
 from typing import Dict, Optional, Sequence
 
@@ -35,7 +36,6 @@ import functools
 from langchain_core.messages import AIMessage
 from langgraph.prebuilt import ToolNode, InjectedState
 from typing import Literal
-from IPython.display import Image, display
 from langchain_community.utilities import SerpAPIWrapper
 
 from exa_py import Exa
@@ -895,10 +895,12 @@ graph = workflow.compile()
 
 
 def display_graph(graph):
-    try:
+    if importlib.util.find_spec("IPython.display"):
+        from IPython.display import Image, display
+
         display(Image(graph.get_graph(xray=True).draw_mermaid_png()))
-    except Exception:
-        # This requires some extra dependencies and is optional
+    else:
+        # Optional visualization dependency is not installed
         pass
 
 # Utility functions for view functions

@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='patient',
             name='gender',
-            field=models.CharField(choices=[('male', 'Male'), ('female', 'Female'), ('other', 'Other')], default=django.utils.timezone.now, max_length=10),
+            field=models.CharField(choices=[('male', 'Male'), ('female', 'Female'), ('other', 'Other')], default='other', max_length=10),
             preserve_default=False,
         ),
         migrations.AlterField(

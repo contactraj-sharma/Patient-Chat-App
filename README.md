@@ -58,6 +58,23 @@ This Patient Chat Application is a Django-based web chatbot designed to facilita
     pip install -r requirements.txt
     ```
 
+- **Configure LLM provider**
+
+  The chatbot defaults to OpenAI models. To use an open-source LLM through [Ollama](https://ollama.com/), set:
+
+  ```bash
+  export LLM_PROVIDER=ollama
+  export OLLAMA_MODEL=llama3        # or any model available in your Ollama server
+  export OLLAMA_BASE_URL=http://localhost:11434  # optional, defaults to this value
+  ```
+
+  To customize the OpenAI model instead, set:
+
+  ```bash
+  export LLM_PROVIDER=openai
+  export OPENAI_MODEL=gpt-4o
+  ```
+
 - **Database Configurations**
 
   - PostgreSQL

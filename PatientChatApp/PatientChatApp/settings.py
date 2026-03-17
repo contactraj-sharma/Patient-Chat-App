@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -97,12 +98,21 @@ DATABASES = {
 from py2neo import Graph
 
 # Credentials
-NEO4J_URI = "bolt://localhost:7687"
-NEO4J_USERNAME = "neo4j"
-NEO4J_PASSWORD = "password"
-NEO4J_DB_NAME = "neo4j"
+NEO4J_URI = os.getenv("NEO4J_URI", "bolt://localhost:7687")
+NEO4J_USERNAME = os.getenv("NEO4J_USERNAME", "neo4j")
+NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "password")
+NEO4J_DB_NAME = os.getenv("NEO4J_DB_NAME", "neo4j")
 
-graph = Graph(NEO4J_URI, auth=(NEO4J_USERNAME, NEO4J_PASSWORD), name=NEO4J_DB_NAME)
+
+def get_neo4j_graph():
+    """Return a Neo4j graph connection when available, otherwise None."""
+    try:
+        return Graph(NEO4J_URI, auth=(NEO4J_USERNAME, NEO4J_PASSWORD), name=NEO4J_DB_NAME)
+    except Exception:
+        return None
+
+
+graph = get_neo4j_graph()
 
 
 
